@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const dboper = require('./operations');
 
 const url = "mongodb://localhost:27017";
 const dbname = 'conFusion';
@@ -12,26 +13,21 @@ MongoClient.connect(url, (err, client) => {
     console.log("Connected to the server");
 
     const db = client.db(dbname);
-    const collection = db.collection('dishes');
+    
+    dboper.insertDocument(db, {name: "pizza", description: "Tasty pizza"}, "dishes", (result) => {
+        console.log('inserted file');
 
-    collection.find().toArray((err, docs) => {
-        if (err) return new Error('error looking for docs');
+        dboper.findDocuments(db, 'dishes', (docs) => {
+            console.log(docs);
 
-        console.log(docs);
+            db.dropCollection('dishes', (result) => {
+                console.log('shut down');
+
+                client.close();
+            })
+        })
     })
 
-    collection.insertOne({
-        "name": "Another Pizza",
-        "description": "test 2"
-    }, (err, result) => {
-        if (err) return new Error('Error inserting into collection');
-
-        console.log('After Insert');
-        console.log(result.ops);
-
-        db.dropCollection('dishes');
-
-        client.close();
-    })
+    
 
 })
