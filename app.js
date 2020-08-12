@@ -9,8 +9,8 @@ const Dishes = require('./models/dish');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const dishRouter = require('./routes/dishRouter');
-const leadersRouter = require('./routes/dishRouter');
-const promoRouter = require('./routes/dishRouter');
+const leadersRouter = require('./routes/leaderRouter');
+const promoRouter = require('./routes/promoRouter');
 
 var app = express();
 
