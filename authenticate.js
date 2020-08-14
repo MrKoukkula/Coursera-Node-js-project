@@ -40,8 +40,8 @@ exports.verifyUser = passport.authenticate('jwt', {session: false});
 
 exports.verifyAdmin = (req, res, next) => {
     if (!req.user.admin) {
-        err = new Error('You are not authorized to post dishes');
-        err.status = 404;
+        err = new Error('You are not authorized to perform this operation!');
+        err.status = 401;
         return next(err);
       }
     next();
